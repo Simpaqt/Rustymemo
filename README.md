@@ -22,6 +22,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ### Once installed
 
+
 ```
 git clone https://github.com/Simpaqt/Rustymemo.git
 
@@ -40,3 +41,8 @@ Rustymemo operates on neovim bindings.
 - i for new note
 - o for open (opens the file in neovim)
 - dd for new line
+
+### Showcase
+
+
+https://github.com/user-attachments/assets/cd427e40-0597-4ce6-a75a-1e7b30940f23
