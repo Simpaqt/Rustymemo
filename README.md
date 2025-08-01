@@ -40,7 +40,7 @@ Rustymemo operates on neovim bindings.
 - j & k for up and down
 - i for new note
 - o for open (opens the file in neovim)
-- dd for new line
+- dd for deleting notes
 
 ### Showcase
 
