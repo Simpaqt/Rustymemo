@@ -90,7 +90,8 @@ The status bar at the bottom always shows available keybindings for the current 
 
 ### Showcase
 
-https://github.com/user-attachments/assets/cd427e40-0597-4ce6-a75a-1e7b30940f23
+
+https://github.com/user-attachments/assets/75d06d42-76c3-4ce9-8540-6f5c35bbb86f
 
 ---
 
