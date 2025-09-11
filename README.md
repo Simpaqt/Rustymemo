@@ -23,32 +23,39 @@ Rustymemo is a fast and intuitive CLI note-taking tool that lets you manage note
 
 Currently the only way to install is with cargo
 
-### Install Rust and cargo using rustup
+### Prerequisites
 
-```
+You'll need Rust 1.82+ (for Rust 2024 edition support) and cargo. Install using rustup:
+
+```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-### Once installed
+### Build and Install
 
-
-```
+```bash
 git clone https://github.com/Simpaqt/Rustymemo.git
-
 cd Rustymemo/
-
 cargo build --release
-
 mv target/release/Rustymemo ~/.local/bin/
+```
+
+Make sure `~/.local/bin` is in your PATH, or alternatively install to a directory that's already in your PATH:
+
+```bash
+# Alternative: install to /usr/local/bin (requires sudo)
+sudo mv target/release/Rustymemo /usr/local/bin/
 ```
 
 ## 🚀 Usage
 
-Rustymemo features an intuitive interface with helpful status bar hints. Here are the key bindings:
+Simply run `Rustymemo` from anywhere in your terminal to launch the application.
+
+Rustymemo features an intuitive interface with a dynamic status bar that shows context-sensitive help and keybinding hints for the current mode. The interface adapts based on what you're doing:
 
 ### Navigation
-- **`j` / `k`** - Move up and down through notes
-- **`↑` / `↓`** - Alternative navigation (in search mode)
+- **`j` / `k`** - Move up and down through notes (works in all modes)
+- **`↑` / `↓`** - Alternative navigation (works in search mode)
 
 ### Actions
 - **`i`** - Create a new note
@@ -58,18 +65,33 @@ Rustymemo features an intuitive interface with helpful status bar hints. Here ar
 - **`q`** - Quit application
 
 ### Search Mode
-- **Type** - Filter notes with fuzzy matching
+- **Type** - Filter notes with fuzzy matching in real-time
+- **`j` / `k`** - Navigate through filtered results
+- **`↑` / `↓`** - Alternative navigation through filtered results
 - **`Enter`** - Open selected note from search results
-- **`Esc`** - Exit search mode
+- **`Backspace`** - Remove characters from search query
+- **`Esc`** - Exit search mode and return to normal view
 
 ### Create Mode
 - **Type** - Enter note name
-- **`Enter`** - Create the note
-- **`Esc`** - Cancel creation
+- **`Enter`** - Create the note (only if name is not empty and file doesn't exist)
+- **`Backspace`** - Remove characters from note name
+- **`Esc`** - Cancel creation and return to normal mode
 
-The status bar at the bottom always shows available keybindings for the current mode!
+### 💡 Smart Interface Features
+
+- **Dynamic Status Bar**: Shows context-sensitive help and available keybindings for the current mode
+- **Real-time Search**: Fuzzy matching updates results as you type
+- **Visual Feedback**: Clear indicators for different modes (Normal, Create, Search)
+- **Confirmation Prompts**: Safe deletion with double-key confirmation
+- **Responsive Navigation**: Vim-like keybindings that work consistently across modes
+
+The status bar at the bottom always shows available keybindings for the current mode, so you never have to memorize commands!
 
 ### Showcase
 
-
 https://github.com/user-attachments/assets/cd427e40-0597-4ce6-a75a-1e7b30940f23
+
+---
+
+**Built with ❤️ in Rust** • Fast, reliable, and terminal-native
