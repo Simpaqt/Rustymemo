@@ -1,14 +1,23 @@
 # About
 
-Rustymemo is a simple cli to allow for notetaking no matter what directory you are in. This tool was made for personal use however if you have a suggestion or want to make a pr feel free to do so.
+Rustymemo is a fast and intuitive CLI note-taking tool that lets you manage notes from anywhere in your terminal. Built with Rust and featuring a modern TUI interface, it's designed for developers who want quick access to their notes without leaving the command line.
 
-With Rustymemo you can:
+## ✨ Features
 
-1. Make a new note that will be saved to ~/notes
-2. Edit existing notes
-3. Delete notes
+- **📝 Quick Note Creation**: Create notes instantly from any directory
+- **🔍 Fuzzy Search**: Find notes quickly with real-time fuzzy matching
+- **⚡ Fast Navigation**: Vim-like keybindings for efficient navigation
+- **🎨 Modern UI**: Clean terminal interface with helpful status bar
+- **📁 Organized Storage**: All notes saved to `~/notes` directory
+- **🔧 Editor Integration**: Opens notes in your preferred editor (nvim by default)
 
-Once you have made a note (a text or md file) You open it with nvim.
+### What you can do:
+
+1. **Create** new notes that are saved to `~/notes`
+2. **Search** through notes with fuzzy matching
+3. **Edit** existing notes in nvim
+4. **Delete** notes with confirmation
+5. **Navigate** efficiently with vim-like keybindings
 
 # Installation
 
@@ -33,14 +42,32 @@ cargo build --release
 mv target/release/Rustymemo ~/.local/bin/
 ```
 
-### Usage
+## 🚀 Usage
 
-Rustymemo operates on neovim bindings.
+Rustymemo features an intuitive interface with helpful status bar hints. Here are the key bindings:
 
-- j & k for up and down
-- i for new note
-- o for open (opens the file in neovim)
-- dd for deleting notes
+### Navigation
+- **`j` / `k`** - Move up and down through notes
+- **`↑` / `↓`** - Alternative navigation (in search mode)
+
+### Actions
+- **`i`** - Create a new note
+- **`o`** - Open selected note in nvim
+- **`/`** - Enter search mode for fuzzy finding
+- **`dd`** - Delete note (press 'd' twice for confirmation)
+- **`q`** - Quit application
+
+### Search Mode
+- **Type** - Filter notes with fuzzy matching
+- **`Enter`** - Open selected note from search results
+- **`Esc`** - Exit search mode
+
+### Create Mode
+- **Type** - Enter note name
+- **`Enter`** - Create the note
+- **`Esc`** - Cancel creation
+
+The status bar at the bottom always shows available keybindings for the current mode!
 
 ### Showcase
 
