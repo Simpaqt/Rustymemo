@@ -2,7 +2,7 @@
 authors = ["Simpa"]
 name = "Rustymemo"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
 dirs = "6.0.0"

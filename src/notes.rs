@@ -31,6 +31,6 @@ pub fn delete_note(file_path: &str) -> Result<(), io::Error> {
 /// Get the default notes directory path (~/notes)
 pub fn get_notes_dir() -> String {
     dirs::home_dir()
-        .map(|path| path.join("notes").to_str().unwrap().to_string())
+        .and_then(|path| path.join("notes").to_str().map(|s| s.to_string()))
         .unwrap_or_else(|| "notes".to_string())
 }

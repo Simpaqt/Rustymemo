@@ -3,7 +3,7 @@ use crossterm::{
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
-use std::{io, path::Path, process::Command};
+use std::{env, io, path::Path, process::Command};
 use ratatui::{
     Terminal,
     backend::CrosstermBackend,
@@ -14,6 +14,33 @@ use ratatui::{
 
 use crate::app::{App, AppMode};
 use crate::notes::{create_new_note, delete_note};
+
+/// Get the appropriate text editor for the current platform
+fn get_editor() -> String {
+    // First check EDITOR environment variable
+    if let Ok(editor) = env::var("EDITOR") {
+        return editor;
+    }
+    
+    // Platform-specific defaults
+    #[cfg(target_os = "windows")]
+    {
+        // Try common Windows editors
+        if Command::new("code").arg("--version").output().is_ok() {
+            return "code".to_string();
+        }
+        if Command::new("notepad++").arg("--version").output().is_ok() {
+            return "notepad++".to_string();
+        }
+        "notepad".to_string()
+    }
+    
+    #[cfg(not(target_os = "windows"))]
+    {
+        // Unix-like systems (Linux, macOS)
+        "nvim".to_string()
+    }
+}
 
 pub fn run_tui(directory: &str) -> Result<(), io::Error> {
     enable_raw_mode()?;
@@ -150,10 +177,10 @@ pub fn run_tui(directory: &str) -> Result<(), io::Error> {
                         if let Some(selected) = app.state.selected() {
                             let current_notes = app.get_current_notes();
                             if let Some(note) = current_notes.get(selected) {
-                                let file_path = format!("{}/{}", app.directory, note);
+                                let file_path = Path::new(&app.directory).join(note);
                                 disable_raw_mode()?;
                                 execute!(terminal.backend_mut(), LeaveAlternateScreen)?;
-                                Command::new("nvim").arg(&file_path).status()?;
+                                Command::new(get_editor()).arg(&file_path).status()?;
                                 enable_raw_mode()?;
                                 execute!(terminal.backend_mut(), EnterAlternateScreen)?;
                                 terminal.clear()?;
@@ -166,8 +193,8 @@ pub fn run_tui(directory: &str) -> Result<(), io::Error> {
                             if let Some(selected) = app.state.selected() {
                                 let current_notes = app.get_current_notes();
                                 if let Some(note) = current_notes.get(selected) {
-                                    let file_path = format!("{}/{}", app.directory, note);
-                                    if delete_note(&file_path).is_ok() {
+                                    let file_path = Path::new(&app.directory).join(note);
+                                    if delete_note(file_path.to_str().unwrap()).is_ok() {
                                         app.refresh_notes();
                                     }
                                 }
@@ -199,9 +226,9 @@ pub fn run_tui(directory: &str) -> Result<(), io::Error> {
                 AppMode::Create => match key.code {
                     KeyCode::Enter => {
                         if !app.input.is_empty() {
-                            let file_path = format!("{}/{}", app.directory, app.input);
-                            if !Path::new(&file_path).exists() {
-                                if create_new_note(&file_path).is_ok() {
+                            let file_path = Path::new(&app.directory).join(&app.input);
+                            if !file_path.exists() {
+                                if create_new_note(file_path.to_str().unwrap()).is_ok() {
                                     app.refresh_notes();
                                 }
                             }
@@ -230,10 +257,10 @@ pub fn run_tui(directory: &str) -> Result<(), io::Error> {
                     KeyCode::Enter => {
                         if let Some(selected) = app.state.selected() {
                             if let Some(note) = app.filtered_notes.get(selected) {
-                                let file_path = format!("{}/{}", app.directory, note);
+                                let file_path = Path::new(&app.directory).join(note);
                                 disable_raw_mode()?;
                                 execute!(terminal.backend_mut(), LeaveAlternateScreen)?;
-                                Command::new("nvim").arg(&file_path).status()?;
+                                Command::new(get_editor()).arg(&file_path).status()?;
                                 enable_raw_mode()?;
                                 execute!(terminal.backend_mut(), EnterAlternateScreen)?;
                                 terminal.clear()?;
