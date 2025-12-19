@@ -9,13 +9,14 @@ Rustymemo is a fast and intuitive CLI note-taking tool that lets you manage note
 - **⚡ Fast Navigation**: Vim-like keybindings for efficient navigation
 - **🎨 Modern UI**: Clean terminal interface with helpful status bar
 - **📁 Organized Storage**: All notes saved to `~/notes` directory
-- **🔧 Editor Integration**: Opens notes in your preferred editor (nvim by default)
+- **🔧 Editor Integration**: Opens notes in your preferred editor (cross-platform support)
+- **🪟 Windows Compatible**: Works seamlessly on Windows, Linux, and macOS
 
 ### What you can do:
 
 1. **Create** new notes that are saved to `~/notes`
 2. **Search** through notes with fuzzy matching
-3. **Edit** existing notes in nvim
+3. **Edit** existing notes in your preferred editor
 4. **Delete** notes with confirmation
 5. **Navigate** efficiently with vim-like keybindings
 
@@ -25,7 +26,7 @@ Currently the only way to install is with cargo
 
 ### Prerequisites
 
-You'll need Rust 1.82+ (for Rust 2024 edition support) and cargo. Install using rustup:
+You'll need Rust 1.56+ (for Rust 2021 edition support) and cargo. Install using rustup:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -40,6 +41,7 @@ cargo build --release
 mv target/release/Rustymemo ~/.local/bin/
 ```
 
+**On Linux/macOS:**
 Make sure `~/.local/bin` is in your PATH, or alternatively install to a directory that's already in your PATH:
 
 ```bash
@@ -47,9 +49,35 @@ Make sure `~/.local/bin` is in your PATH, or alternatively install to a director
 sudo mv target/release/Rustymemo /usr/local/bin/
 ```
 
+**On Windows:**
+Add the executable to a directory in your PATH, or add the directory to your PATH:
+
+```powershell
+# Move to a directory in your PATH
+move target\release\Rustymemo.exe C:\Windows\System32\
+```
+
 ## 🚀 Usage
 
 Simply run `Rustymemo` from anywhere in your terminal to launch the application.
+
+### 🔧 Editor Configuration
+
+Rustymemo automatically detects the best available text editor for your platform:
+
+- **Linux/macOS**: Uses `nvim` by default
+- **Windows**: Tries VS Code (`code`), Notepad++ (`notepad++`), then falls back to `notepad`
+- **Custom Editor**: Set the `EDITOR` environment variable to use your preferred editor
+
+To set a custom editor:
+
+```bash
+# Linux/macOS
+export EDITOR=vim  # or nano, emacs, etc.
+
+# Windows (PowerShell)
+$env:EDITOR = "code"  # or "notepad++", "vim", etc.
+```
 
 Rustymemo features an intuitive interface with a dynamic status bar that shows context-sensitive help and keybinding hints for the current mode. The interface adapts based on what you're doing:
 
@@ -59,7 +87,7 @@ Rustymemo features an intuitive interface with a dynamic status bar that shows c
 
 ### Actions
 - **`i`** - Create a new note
-- **`o`** - Open selected note in nvim
+- **`o`** - Open selected note in your default editor
 - **`/`** - Enter search mode for fuzzy finding
 - **`dd`** - Delete note (press 'd' twice for confirmation)
 - **`q`** - Quit application
